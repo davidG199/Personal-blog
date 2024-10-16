@@ -1,0 +1,28 @@
+{
+    "articles": [
+        {
+            "id": 1,
+            "title": "mi primer viaje",
+            "date": "2024-02-21",
+            "content": "lorem ipsum dolor sit amet, consectetur adip"
+        },
+        {
+            "id": 2,
+            "title": "mailo",
+            "date": "2403/42/2",
+            "content": "hola que mas pues"
+        },
+        {
+            "id": 3,
+            "title": "ver documentales es bueno",
+            "date": "2032-32-12",
+            "content": "el otro vi un anuncio que decia que era bueno ver documentales"
+        },
+        {
+            "id": 4,
+            "title": "prueba de auth",
+            "date": "2024-16-10",
+            "content": "Si funciona"
+        }
+    ]
+}
