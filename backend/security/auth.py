@@ -1,40 +1,73 @@
+from typing import Annotated
+from fastapi import Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer
+from jose import JWTError, jwt
+from models.user import User, UserInDb
+from models.token import TokenData
+from passlib.context import CryptContext
 
-from typing import Optional
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
+SECRET_KEY = "holaMundo"
+ALGORITHM = "HS256"
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-security = HTTPBasic()
+admin = {
+    "username": "admin",
+    "hashed_password": pwd_context.hash("admin")
+}
 
-# Definimos las credenciales de administrador para la autenticación
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin"
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="admin/login")
 
-# Definimos la función para autenticar a los usuarios
-def authenticate_user(credentials: HTTPBasicCredentials) -> Optional[str]:
-    #Recibimos las credenciales enviadas por el usuario
-    #luego verificamos si las credenciales coinciden 
-    if credentials.username == ADMIN_USERNAME and credentials.password == ADMIN_PASSWORD:
-        #Si las credenciales son válidas, retornamos el nombre del usuario
-        return credentials.username
-    #Si las credenciales no coinciden manda un 401, indicando que el acceso esta prohibido
-    raise HTTPException(
-        status_code= status.HTTP_401_UNAUTHORIZED,
-        detail="Credenciales incorrectas",
-        headers={"WWW-Authenticate": "Basic"}
+
+def verify_password(plain_password: str, hashed_password: str):
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password: str):
+    return pwd_context.hash(password)
+
+def create_access_token(data:dict):
+    to_encode = data.copy()
+    return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+
+def get_user(db, username: str):
+    if db["username"] == username:
+        return UserInDb(username=db["username"], hashed_password=db["hashed_password"])
+    return None
+
+def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
     )
 
-#Esta funcion actua como una dependencia para las rutas que necesitan autenticacion, recibe las crendeciales usando (depends(security))
-def get_current_admin(credentials: HTTPBasicCredentials = Depends(security)) -> str:
-    #usamos la funcion para verificar al usuario
-    username = authenticate_user(credentials)
-    
-    #si las credenciales son correctas permite acceso a la ruta protegidas, si no lo son devuelve un 401 indicando que la auth fallo
-    if not username:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid credentials",
-            headers={"WWW-Authenticate": "Basic"},
-        )
-    return username
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    user = get_user(admin, username)
+    if user is None:
+        raise credentials_exception
+    return user
 
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    return verify_token(token, credentials_exception)
+
+def verify_token(token: str, credentials_exception):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credentials_exception
+        return TokenData(username=username)
+    except JWTError:
+        raise credentials_exception

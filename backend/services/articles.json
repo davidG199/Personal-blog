@@ -2,27 +2,27 @@
     "articles": [
         {
             "id": 1,
-            "title": "mi primer viaje",
-            "date": "2024-02-21",
-            "content": "lorem ipsum dolor sit amet, consectetur adip"
+            "title": "test",
+            "date": "2015-04-23",
+            "content": "Esta es una prueba pa ver"
         },
         {
             "id": 2,
-            "title": "mailo",
-            "date": "2403/42/2",
-            "content": "hola que mas pues"
+            "title": "aver a ver",
+            "date": "2030-23-12",
+            "content": "En teoria si todo va bien, ahora si deberia funcionar todo"
         },
         {
             "id": 3,
-            "title": "ver documentales es bueno",
-            "date": "2032-32-12",
-            "content": "el otro vi un anuncio que decia que era bueno ver documentales"
+            "title": "holaaaaaaa mundo",
+            "date": "2012-12-12",
+            "content": "AAAAhora si deberia funcionar"
         },
         {
             "id": 4,
-            "title": "prueba de auth",
-            "date": "2024-16-10",
-            "content": "Si funciona"
+            "title": "Prueba para ver el titulo y el overflow, asi que puse un titulo largo para ver la distribucion del ancho del titulo",
+            "date": "2024-10-18",
+            "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaawwwwwwwwwwwwwwwwweoeoeoooooooooooooooooooooooooooooooooooooooo"
         }
     ]
 }
