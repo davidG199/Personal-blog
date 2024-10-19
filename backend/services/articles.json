@@ -5,24 +5,6 @@
             "title": "test",
             "date": "2015-04-23",
             "content": "Esta es una prueba pa ver"
-        },
-        {
-            "id": 2,
-            "title": "aver a ver",
-            "date": "2030-23-12",
-            "content": "En teoria si todo va bien, ahora si deberia funcionar todo"
-        },
-        {
-            "id": 3,
-            "title": "holaaaaaaa mundo",
-            "date": "2012-12-12",
-            "content": "AAAAhora si deberia funcionar"
-        },
-        {
-            "id": 4,
-            "title": "Prueba para ver el titulo y el overflow, asi que puse un titulo largo para ver la distribucion del ancho del titulo",
-            "date": "2024-10-18",
-            "content": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaawwwwwwwwwwwwwwwwweoeoeoooooooooooooooooooooooooooooooooooooooo"
         }
     ]
 }
