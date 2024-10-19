@@ -2,8 +2,8 @@ from typing import Annotated, Optional
 from fastapi.responses import JSONResponse
 from models.token import TokenData
 from models.article import Article
-from fastapi import APIRouter, Depends, HTTPException, Response
-from security.auth import get_current_user, admin, UserInDb, get_user, create_access_token, verify_password
+from fastapi import APIRouter, Depends, HTTPException
+from security.auth import get_current_user, admin, get_user, create_access_token, verify_password
 from fastapi.security import OAuth2PasswordRequestForm 
 from services.articles import ArticleService
 

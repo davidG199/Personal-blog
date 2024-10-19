@@ -2,7 +2,7 @@ from typing import Annotated
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from models.user import User, UserInDb
+from models.user import  UserInDb
 from models.token import TokenData
 from passlib.context import CryptContext
 
